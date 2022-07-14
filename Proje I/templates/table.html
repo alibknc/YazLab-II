@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% block style %}
+<link href="{% static 'css/query.css' %}" rel="stylesheet" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Lato:400,600,700" rel="stylesheet" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<title>{% block title %}Sorgulama{% endblock %}</title>
+{% endblock %}
+<div class="main-content">
+    <form method="GET" action=".">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="arac">Araç</label>
+                {% if bool == True %}<br><label>{{ selected }} Numaralı Araç</label>{% endif %}
+                <select id="arac" class="form-control" name="arac" {% if bool == True %} hidden {% endif %}>
+                    <option {% if selected == None %} selected {% endif %}>Seçiniz...</option>
+                    {% for arac in araclar %}
+                    <option value="{{ arac }}" {% if arac == selected %} selected {% endif %} >{{ arac }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% if bool == True %}
+            <div class="form-group col-md-4">
+                <label for="zaman">Başlangıç Tarih</label>
+                <input type="date" id="startDate" class="form-control" name="startDate" max="{{start|date:'Y-m-d'}}" min="{{first|date:'Y-m-d'}}" value="{{start|date:'Y-m-d'}}">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="zaman">Başlangıç Saati</label>
+                <input type="time" id="startTime" class="form-control" name="startTime" value="{{start|time:'H:i'}}">
+            </div>
+            <div class="form-group col-md-4"></div>
+            <div class="form-group col-md-4">
+                <label for="zaman">Bitiş Tarih</label>
+                <input type="date" id="finishDate" class="form-control" name="finishDate" max="{{start|date:'Y-m-d'}}" min="{{first|date:'Y-m-d'}}" value="{{finish|date:'Y-m-d'}}">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="zaman">Bitiş Saati</label>
+                <input type="time" id="finishTime" class="form-control" name="finishTime" value="{{finish|time:'H:i'}}">
+            </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary send-button">Ara</button>
+        {% if bool == True %}<a class="btn btn-secondary send-button" href="{% url 'table' %}">Sıfırla</a>{% endif %}
+    </form>
+    <div class="container">
+        <h2 class="text-center">Filtre Sonuçları</h2><br>
+        {% if error != True %}
+        {{m | safe}}
+        {% else %}
+        <h4 class="text-center">Sonuç Bulunamadı!</h4>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% block style %}
+<link href="{% static 'css/home.css' %}" rel="stylesheet" />
+{% endblock %}
+
+<div class="container">
+   {{m | safe}}
+</div>
+
+{% endblock %}

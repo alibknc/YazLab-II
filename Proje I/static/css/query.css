@@ -1,0 +1,14 @@
+.form-control, 
+textarea {
+  max-width: calc(100%);
+  background-color: #000;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.send-button {
+  margin-top: 5px;
+  height: 50px;
+  width: 100px;
+  overflow: hidden;
+}

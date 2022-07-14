@@ -1,0 +1,127 @@
+<html>
+
+<head>
+    <title><%= input %> - Kocaeli Akademik</title>
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="css/results.css" />
+</head>
+
+<body>
+    <div id="header">
+        <div id="topbar">
+            <a href="/"><img id= "searchbarimage" src="images/logo.jpg"></a>
+            <form action="results" method="GET" id="searchbarform">
+                <div id="searchbar" type="text">
+                    <input id="searchbartext" name="search" type="text" value=<%= input %> />
+                    <button id="searchbarbutton" type="submit">
+                        <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path
+                                d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div id="optionsbar">
+            <ul id="optionsmenu1">
+                <li id="optionsmenuactive">Tümü</li>
+            </ul>
+            <!--<ul id="optionsmenu2">
+                <li>Settings</li>
+                <li>Tools</li>
+            </ul>-->
+        </div>
+    </div>
+    <div id="searchresultsarea">
+        <p id="searchresultsnumber">Toplam <%= yayinlar.length + arastirmacilar.length %> sonuç bulundu </p>
+        <p>Araştırmacılar</p>
+        <hr class="dashed">
+        <% if(arastirmacilar.length != 0){ %>
+            <% arastirmacilar.forEach(function(a){ %>
+                <a href="/arastirmaci?pid=<%= a.pid %>" target=”_blank”>
+                <div class="our-team">
+                    <div class="row">
+                      <div class="picture">
+                        <img class="img-fluid" src="images/user.png">
+                      </div>
+                      <h3 class="name"><%= a.adi_soyadi %></h3>
+                    </div>
+                  </div>
+                </a>
+            <% }) %>
+          <% } else{ %>  
+            <h5>Araştırmacı Bulunamadı.</h5>
+         <% } %>
+        <p>Yayınlar</p>
+        <hr class="dashed">
+        <% if(yayinlar.length != 0){ %>
+            <% for(var i = 0; i< yayinlar.length; i++){ %>
+                <div class="searchresult">
+                    <a href="/" class="searchtitle"><h2><%= yayinlar[i].adi %></h2></a>
+                    <a><% yazarlar[i].forEach(function(item) {%>
+                        <%= item.adi_soyadi %>,
+                        <% }) %>
+                     </a> <button>▼</button>
+                    <p>Yayın Türü: <%= turler[i].adi %></p>
+                    <p><%= yayinlar[i].yer %>, <%= yayinlar[i].tarih %></p>
+                </div>
+            <% } %> 
+          <% } else{ %>  
+            <h5>Yayın Bulunamadı.</h5>
+         <% } %>
+         
+        <!--<div class="searchresult">
+            <h2>Lock (computer science) - Wikipedia</h2>
+            <a>https://en.wikipedia.org/wiki/Lock_(computer_science)</a> <button>▼</button>
+            <p>In computer science, a lock or mutex (from mutual exclusion) is a synchronization mechanism for enforcing limits on access to a resource in an</p>
+            <p> environment where there are many threads of execution.</p>
+        </div>-->
+        <!--<div class="relatedsearches">
+            <h3>Searches related to computer engineering mutex concept</h3>
+            <div class="relatedlists">
+                <ul class="relatedleft">
+                    <li>what is <b>mutex</b> and semaphore</li>
+                    <li><b>mutex</b> lock c++</li>
+                    <li><b>mutex</b> java</li>
+                    <li><b>mutex</b> c++</li>
+                </ul>
+                <ul class="relatedright">
+                    <li><b>mutex</b> vs lock</li>
+                    <li><b>mutex</b> semaphore example</li>
+                    <li><b>mutex</b> and semaphore example in c</li>
+                    <li><b>mutex</b> c#</li>
+                </ul>
+            </div>
+        </div>-->
+
+        <!--<div class="pagebar">
+            <ul class="pagelist">
+                <li class="pagelistprevious">Previous</li>
+                <li class="pagelistfirst">1</li>
+                <li class="pagelistnumber">2</li>
+                <li class="pagelistnumber">3</li>
+                <li class="pagelistnumber">4</li>
+                <li class="pagelistnumber">5</li>
+                <li class="pagelistnumber">6</li>
+                <li class="pagelistnumber">7</li>
+                <li class="pagelistnumber">8</li>
+                <li class="pagelistnumber">9</li>
+                <li class="pagelistnumber">10</li>
+                <li class="pagelistnext">Next</li>
+            </ul>
+        </div>-->
+    </div>
+
+    <div id="footer">
+        <div id="footerlocation">
+            <p>Muhammet Ali Bakınç</p>
+        </div>
+
+        <ul id="footermenu">
+            <li>Kocaeli Üniversitesi © 2022</li>
+        </ul>
+    </div>
+</body>
+
+</html>

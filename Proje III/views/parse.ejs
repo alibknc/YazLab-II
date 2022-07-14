@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>XML Yükleme</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
+    <link rel="stylesheet" href="css/search.css">
+  </head>
+  <body>
+    <div id="header">
+      <div id="topbar">
+          <a href="/"><img id= "searchbarimage" src="images/logo.jpg"></a>
+      </div>
+  </div>
+    <div class="content">
+      <div class="search-wrapper">
+        <h1>Veri Yükleme</h1><br>
+        <p>Yüklemek istediğiniz XML dosyasının linkini aşağıya giriniz</p>
+        <form method="GET" action="parse">
+            <div class="search-bar">
+                <input type="text" rows="5" name="data">
+              </div>
+              <div class="search-buttons">
+                <input type="submit" value="Yükle">
+              </div>
+        </form>
+        <% if(typeof(success) != 'undefined'){ %>
+          <p style="color: green;">Kayıt Başarılı!</p>
+        <% }%>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <div class="bar-left">
+        <div class="menu">
+          <a href="">Muhammet Ali Bakınç</a>
+        </div>
+      </div>
+      <div class="bar-right">
+        <div class="menu">
+          <a href="">Kocaeli Üniversitesi © 2022</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

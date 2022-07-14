@@ -1,0 +1,197 @@
+<html>
+
+<head>
+    <title>
+        <%= name %> - Kocaeli Akademik
+    </title>
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="css/results.css" />
+    <script src="https://rawgit.com/neo4j-contrib/neovis.js/master/dist/neovis.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="header">
+        <div id="topbar">
+            <a href="/"><img id="searchbarimage" src="images/logo.jpg"></a>
+            <h2>
+                <%= name %>
+            </h2>
+        </div>
+        <div id="optionsbar">
+            <ul id="optionsmenu1">
+                <li id="optionsmenuactive">Tümü</li>
+            </ul>
+            <!--<ul id="optionsmenu2">
+                <li>Settings</li>
+                <li>Tools</li>
+            </ul>-->
+        </div>
+    </div>
+    <div id="searchresultsarea">
+        <p id="searchresultsnumber">Toplam <%= yayinlar.length %> sonuç bulundu </p>
+        <div id="t1"></div>
+        <div id="t2"></div>
+        <% for(var i=0; i< ortaklar.length; i++){ %>
+            <div class="searchresult">
+                <a href="/arastirmaci?pid=<%= ortaklar[i].pid %>">
+                    <h2>
+                        <%= ortaklar[i].adi_soyadi %>
+                    </h2>
+                </a>
+            </div>
+        <% } %>
+        <br>
+        <p>Yayınlar</p>
+        <hr class="dashed">
+        <% if(yayinlar.length != 0){ %>
+            <% for(var i=0; i< yayinlar.length; i++){ %>
+                <div class="searchresult">
+                    <a href="/" class="searchtitle">
+                        <h2>
+                            <%= yayinlar[i].adi %>
+                        </h2>
+                    </a>
+                    <a>
+                        <% yazarlar[i].forEach(function(item) {%>
+                            <%= item.adi_soyadi %>,
+                                <% }) %>
+                    </a> <button>▼</button>
+                    <p>Yayın Türü: <%= turler[i].adi %></p>
+                    <p>
+                        <%= yayinlar[i].yer %>, <%= yayinlar[i].tarih %>
+                    </p>
+                </div>
+                <% } %>
+                    <% } else{ %>
+                        <h5>Yayın Bulunamadı.</h5>
+                        <% } %>
+
+                            <!--<div class="searchresult">
+            <h2>Lock (computer science) - Wikipedia</h2>
+            <a>https://en.wikipedia.org/wiki/Lock_(computer_science)</a> <button>▼</button>
+            <p>In computer science, a lock or mutex (from mutual exclusion) is a synchronization mechanism for enforcing limits on access to a resource in an</p>
+            <p> environment where there are many threads of execution.</p>
+        </div>-->
+                            <!--<div class="relatedsearches">
+            <h3>Searches related to computer engineering mutex concept</h3>
+            <div class="relatedlists">
+                <ul class="relatedleft">
+                    <li>what is <b>mutex</b> and semaphore</li>
+                    <li><b>mutex</b> lock c++</li>
+                    <li><b>mutex</b> java</li>
+                    <li><b>mutex</b> c++</li>
+                </ul>
+                <ul class="relatedright">
+                    <li><b>mutex</b> vs lock</li>
+                    <li><b>mutex</b> semaphore example</li>
+                    <li><b>mutex</b> and semaphore example in c</li>
+                    <li><b>mutex</b> c#</li>
+                </ul>
+            </div>
+        </div>-->
+
+                            <!--<div class="pagebar">
+            <ul class="pagelist">
+                <li class="pagelistprevious">Previous</li>
+                <li class="pagelistfirst">1</li>
+                <li class="pagelistnumber">2</li>
+                <li class="pagelistnumber">3</li>
+                <li class="pagelistnumber">4</li>
+                <li class="pagelistnumber">5</li>
+                <li class="pagelistnumber">6</li>
+                <li class="pagelistnumber">7</li>
+                <li class="pagelistnumber">8</li>
+                <li class="pagelistnumber">9</li>
+                <li class="pagelistnumber">10</li>
+                <li class="pagelistnext">Next</li>
+            </ul>
+        </div>-->
+    </div>
+
+    <div id="footer">
+        <div id="footerlocation">
+            <p>Muhammet Ali Bakınç</p>
+        </div>
+
+        <ul id="footermenu">
+            <li>Kocaeli Üniversitesi © 2022</li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        var t1;
+        var t2;
+        window.onload = function draw() {
+            var config = {
+                container_id: "t1",
+                server_url: "bolt://localhost:7687",
+                server_user: "neo4j",
+                server_password: "123456",
+                labels: {
+                    "Arastirmaci": {
+                        "caption": "adi_soyadi",
+                        "size": "pagerank",
+                        "image": 'images/user.png',
+                        "community": "community",
+                        "title_properties": [
+                            "adi_soyadi"
+                        ]
+                    },
+                },
+                relationships: {
+                    "Ortak": {
+                        "thickness": "weight",
+                        "caption": true,
+                    }
+                },
+                initial_cypher: `MATCH (n:Arastirmaci)<-[r:Ortak]->(m:Arastirmaci) WHERE n.adi_soyadi = "<%= name %>" RETURN *`
+            };
+
+            t1 = new NeoVis.default(config);
+            t1.render();
+
+            var config = {
+                container_id: "t2",
+                server_url: "bolt://localhost:7687",
+                server_user: "neo4j",
+                server_password: "123456",
+                labels: {
+                    "Arastirmaci": {
+                        "caption": "adi_soyadi",
+                        "size": "pagerank",
+                        "image": 'images/user.png',
+                        "community": "community",
+                        "title_properties": [
+                            "adi_soyadi"
+                        ]
+                    },
+                    "Yayin": {
+                        "caption": "key",
+                        "size": "pagerank",
+                        "community": "community",
+                        "title_properties": [
+                            "adi",
+                            "key",
+                            "tarih",
+                            "yer"
+                        ]
+                    },
+                },
+                relationships: {
+                    "Yazar": {
+                        "thickness": "weight",
+                        "caption": true,
+                    }
+                },
+                initial_cypher: `MATCH (n:Arastirmaci)-[r:Yazar]->(m:Yayin) WHERE n.adi_soyadi = "<%= name %>" RETURN *`
+            };
+
+            t2 = new NeoVis.default(config);
+            t2.render();
+        }
+    </script>
+</body>
+
+</html>

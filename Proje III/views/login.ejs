@@ -1,0 +1,32 @@
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetim Girişi</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="box">
+        <div class="logo">
+			<a href="/"><img id= "searchbarimage" src="images/logo.jpg"></a>
+        </div>
+    <h2>Oturum Aç</h2>
+	<% if(typeof(error) != 'undefined'){ %>
+		<p style="color: red;">Hatalı Kullanıcı Adı veya Şifre!</p>
+	<% }%>
+    <p>Kullanıcı Adı ve Şifrenizi Giriniz</p>
+    <form action="/login" method="POST">
+        <div class="inputBox">
+          <input type="text" name="username" required>
+          <label>Kullanıcı Adı</label>
+        </div>
+        <div class="inputBox">
+              <input type="password" name="password" required>
+              <label>Şifre</label>
+            </div>
+        <button type="submit" name="sign-in">Giriş</button>
+      </form>
+    </div>  
+</body>
+</html>
